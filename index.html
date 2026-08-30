@@ -1,50 +1,113 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 
 <head>
-    <title>NAILA AI</title>
 
 ```
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NAILA AI</title>
+
 <style>
+
     * {
         box-sizing: border-box;
+    }
+
+    :root {
+        --bg1: #090b18;
+        --bg2: #21133f;
+        --card: rgba(255,255,255,0.08);
+        --card2: rgba(255,255,255,0.12);
+        --text: #ffffff;
+        --muted: #a9a9b8;
+        --accent: #7c3aed;
+        --accent2: #6366f1;
+    }
+
+    body.light {
+        --bg1: #eef2ff;
+        --bg2: #ddd6fe;
+        --card: rgba(255,255,255,0.65);
+        --card2: rgba(255,255,255,0.8);
+        --text: #171717;
+        --muted: #555;
     }
 
     body {
         margin: 0;
         min-height: 100vh;
         font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #0f1020, #241747, #111827);
-        color: white;
-        transition: 0.3s;
+        background:
+            radial-gradient(circle at 10% 20%, #43247755, transparent 30%),
+            radial-gradient(circle at 90% 80%, #2563eb44, transparent 30%),
+            linear-gradient(135deg, var(--bg1), var(--bg2));
+        color: var(--text);
+        transition: 0.4s;
+        overflow-x: hidden;
     }
 
-    body.light {
-        background: linear-gradient(135deg, #eef2ff, #f5f3ff, #e0f2fe);
-        color: #222;
+    /* ANIMATED BACKGROUND */
+
+    .orb {
+        position: fixed;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: #8b5cf633;
+        filter: blur(30px);
+        animation: float 8s infinite alternate ease-in-out;
+        z-index: -1;
     }
+
+    .orb.one {
+        top: 5%;
+        left: 5%;
+    }
+
+    .orb.two {
+        right: 5%;
+        bottom: 10%;
+        animation-delay: 2s;
+    }
+
+    @keyframes float {
+        from {
+            transform: translate(0,0);
+        }
+
+        to {
+            transform: translate(60px,-40px);
+        }
+    }
+
+    /* APP */
 
     .app {
-        width: 900px;
-        max-width: 95%;
-        height: 720px;
-        margin: 30px auto;
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 25px;
+        width: 1000px;
+        max-width: 96%;
+        height: 760px;
+        margin: 25px auto;
+        background: var(--card);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 28px;
         overflow: hidden;
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 30px 80px #0008;
         display: flex;
         flex-direction: column;
     }
 
+    /* HEADER */
+
     .header {
         padding: 15px 22px;
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
         border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -53,16 +116,28 @@
         align-items: center;
     }
 
-    .ai-logo {
-        width: 50px;
-        height: 50px;
+    .logo {
+        width: 55px;
+        height: 55px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        background: linear-gradient(135deg,var(--accent),var(--accent2));
         display: flex;
-        justify-content: center;
         align-items: center;
-        font-size: 25px;
-        margin-right: 12px;
+        justify-content: center;
+        font-size: 28px;
+        margin-right: 13px;
+        box-shadow: 0 0 30px #7c3aed88;
+        animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+        0%,100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.08);
+        }
     }
 
     .brand h2 {
@@ -71,7 +146,7 @@
 
     .status {
         font-size: 12px;
-        color: #9ca3af;
+        color: var(--muted);
         margin-top: 4px;
     }
 
@@ -81,44 +156,46 @@
         height: 8px;
         background: #22c55e;
         border-radius: 50%;
+        margin-right: 5px;
     }
 
-    .header-buttons button {
-        background: rgba(255,255,255,0.1);
-        color: white;
+    .top-button {
         border: none;
-        border-radius: 10px;
-        padding: 9px;
+        border-radius: 12px;
+        padding: 10px 13px;
+        background: var(--card2);
+        color: var(--text);
         cursor: pointer;
-        margin-left: 5px;
+        font-size: 17px;
     }
 
-    .header-buttons button:hover {
-        background: rgba(255,255,255,0.2);
-    }
+    /* NAV */
 
     .nav {
         display: flex;
-        justify-content: center;
-        gap: 8px;
+        gap: 5px;
         padding: 10px;
+        overflow-x: auto;
         border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .nav button {
-        background: transparent;
-        color: #bbb;
+        white-space: nowrap;
         border: none;
-        padding: 8px 15px;
+        background: transparent;
+        color: var(--muted);
+        padding: 10px 14px;
+        border-radius: 11px;
         cursor: pointer;
-        border-radius: 10px;
     }
 
     .nav button:hover,
     .nav button.active {
-        background: #6c5ce7;
+        background: var(--accent);
         color: white;
     }
+
+    /* PAGES */
 
     .page {
         display: none;
@@ -131,175 +208,296 @@
         flex-direction: column;
     }
 
+    /* HOME */
+
     .home {
-        text-align: center;
         justify-content: center;
         align-items: center;
-        padding: 30px;
+        text-align: center;
+        padding: 35px;
     }
 
-    .home-icon {
-        font-size: 80px;
+    .big-logo {
+        font-size: 100px;
+        animation: pulse 3s infinite;
     }
 
     .home h1 {
-        font-size: 42px;
+        font-size: 45px;
         margin: 10px;
     }
 
+    .gradient-text {
+        background: linear-gradient(90deg,#a78bfa,#60a5fa,#c084fc);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
     .home p {
-        color: #bbb;
-        max-width: 500px;
+        max-width: 550px;
+        color: var(--muted);
         line-height: 1.6;
     }
 
-    .start-button {
+    .start {
         margin-top: 20px;
-        padding: 14px 25px;
+        padding: 15px 25px;
         border: none;
         border-radius: 14px;
-        background: linear-gradient(135deg, #7c3aed, #6366f1);
+        background: linear-gradient(135deg,var(--accent),var(--accent2));
         color: white;
-        cursor: pointer;
         font-size: 16px;
+        cursor: pointer;
     }
+
+    /* CHAT */
 
     #chat {
         flex: 1;
-        padding: 20px;
+        padding: 22px;
         overflow-y: auto;
     }
 
-    .message-container {
+    .message-row {
         display: flex;
-        align-items: flex-end;
         margin: 15px 0;
+        align-items: flex-end;
+        animation: appear .25s ease;
     }
 
-    .user-container {
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .user-row {
         justify-content: flex-end;
     }
 
-    .ai-container {
+    .ai-row {
         justify-content: flex-start;
     }
 
     .avatar {
-        width: 38px;
-        height: 38px;
+        width: 39px;
+        height: 39px;
         border-radius: 50%;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         flex-shrink: 0;
-        font-size: 18px;
-    }
-
-    .user-avatar {
-        background: #7c3aed;
-        margin-left: 8px;
     }
 
     .ai-avatar {
-        background: #0891b2;
-        margin-right: 8px;
+        background: linear-gradient(135deg,#06b6d4,#3b82f6);
+        margin-right: 9px;
     }
 
-    .message {
-        max-width: 65%;
-        padding: 12px 16px;
+    .user-avatar {
+        background: var(--accent);
+        margin-left: 9px;
+    }
+
+    .bubble {
+        max-width: 68%;
+        padding: 13px 16px;
         border-radius: 18px;
         line-height: 1.5;
-        position: relative;
+        word-wrap: break-word;
     }
 
-    .user-message {
-        background: linear-gradient(135deg, #7c3aed, #6366f1);
+    .user-bubble {
+        background: linear-gradient(135deg,var(--accent),var(--accent2));
         border-bottom-right-radius: 5px;
     }
 
-    .ai-message {
-        background: rgba(255,255,255,0.1);
+    .ai-bubble {
+        background: var(--card2);
         border-bottom-left-radius: 5px;
     }
 
     .time {
-        font-size: 10px;
-        opacity: 0.6;
+        font-size: 9px;
+        opacity: .55;
         margin-top: 5px;
     }
 
-    .copy {
+    .message-tools {
         font-size: 10px;
-        margin-left: 8px;
+        opacity: .65;
+        margin-top: 4px;
         cursor: pointer;
     }
 
     #typing {
         display: none;
-        padding: 5px 20px;
-        color: #aaa;
+        padding: 5px 22px;
+        color: var(--muted);
         font-size: 13px;
     }
 
+    /* INPUT */
+
     .input-area {
         display: flex;
-        gap: 8px;
+        gap: 7px;
         padding: 15px;
-        border-top: 1px solid rgba(255,255,255,0.1);
+        border-top: 1px solid rgba(255,255,255,.1);
     }
 
     .input-area input {
         flex: 1;
-        padding: 14px;
-        border-radius: 13px;
-        border: 1px solid rgba(255,255,255,0.2);
-        background: rgba(255,255,255,0.08);
-        color: white;
+        padding: 14px 16px;
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 14px;
+        background: var(--card);
+        color: var(--text);
         outline: none;
     }
 
-    .send-button {
-        width: 55px;
+    .input-area input:focus {
+        border-color: var(--accent);
+    }
+
+    .input-button {
+        width: 48px;
         border: none;
         border-radius: 13px;
-        background: #6c5ce7;
+        background: var(--card2);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 17px;
+    }
+
+    .send {
+        background: linear-gradient(135deg,var(--accent),var(--accent2));
         color: white;
-        cursor: pointer;
-        font-size: 18px;
     }
 
-    .clear-button {
-        margin: 0 auto 10px;
-        background: transparent;
+    .clear {
+        align-self: center;
+        margin-bottom: 10px;
         border: none;
-        color: #aaa;
+        background: transparent;
+        color: var(--muted);
         cursor: pointer;
     }
 
-    .settings {
+    /* SETTINGS */
+
+    .content {
         padding: 30px;
     }
 
-    .setting-box {
-        background: rgba(255,255,255,0.08);
-        padding: 18px;
-        border-radius: 15px;
-        margin: 15px 0;
+    .card {
+        background: var(--card2);
+        padding: 20px;
+        border-radius: 17px;
+        margin-bottom: 15px;
     }
 
     select,
-    .settings button {
-        padding: 10px;
-        border-radius: 10px;
+    .normal-button {
+        padding: 11px 14px;
+        margin-top: 10px;
         border: none;
-        margin-top: 8px;
+        border-radius: 10px;
+        background: var(--card);
+        color: var(--text);
+        cursor: pointer;
     }
 
-    .about {
+    /* IMAGE GENERATOR */
+
+    .image-box {
+        text-align: center;
         padding: 40px;
-        line-height: 1.7;
     }
+
+    .image-preview {
+        width: 300px;
+        height: 200px;
+        max-width: 100%;
+        margin: 25px auto;
+        border-radius: 18px;
+        background:
+            linear-gradient(135deg,#7c3aed,#2563eb);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 50px;
+    }
+
+    .image-box input {
+        width: 80%;
+        padding: 14px;
+        border-radius: 12px;
+        border: none;
+        background: var(--card2);
+        color: var(--text);
+    }
+
+    /* GAME */
+
+    .game {
+        text-align: center;
+        padding: 40px;
+    }
+
+    .game-button {
+        font-size: 50px;
+        padding: 20px;
+        border: none;
+        border-radius: 20px;
+        background: var(--card2);
+        cursor: pointer;
+    }
+
+    #gameResult {
+        font-size: 20px;
+        margin: 20px;
+    }
+
+    /* MUSIC */
+
+    .music {
+        text-align: center;
+        padding: 40px;
+    }
+
+    .music-icon {
+        font-size: 80px;
+    }
+
+    .music a {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 13px 20px;
+        border-radius: 12px;
+        background: #ff0033;
+        color: white;
+        text-decoration: none;
+    }
+
+    /* PROFILE */
+
+    .profile {
+        text-align: center;
+        padding: 40px;
+    }
+
+    .profile-avatar {
+        font-size: 80px;
+    }
+
+    /* LOGIN */
 
     .login {
         justify-content: center;
@@ -308,9 +506,9 @@
     }
 
     .login-box {
-        width: 350px;
+        width: 360px;
         max-width: 100%;
-        background: rgba(255,255,255,0.08);
+        background: var(--card2);
         padding: 30px;
         border-radius: 20px;
     }
@@ -318,9 +516,9 @@
     .login-box input {
         width: 100%;
         padding: 13px;
-        margin: 8px 0;
-        border-radius: 10px;
+        margin: 7px 0;
         border: none;
+        border-radius: 10px;
     }
 
     .login-box button {
@@ -329,43 +527,38 @@
         margin-top: 10px;
         border: none;
         border-radius: 10px;
-        background: #6c5ce7;
+        background: var(--accent);
         color: white;
         cursor: pointer;
     }
 
-    .music {
-        text-align: center;
-        padding: 40px;
-    }
+    /* MOBILE */
 
-    .music button {
-        padding: 12px 20px;
-        border: none;
-        border-radius: 10px;
-        background: #6c5ce7;
-        color: white;
-        cursor: pointer;
-    }
+    @media(max-width:700px) {
 
-    @media (max-width: 650px) {
         .app {
-            height: 95vh;
-            margin: 10px auto;
-        }
-
-        .message {
-            max-width: 80%;
+            height: 96vh;
+            margin: 2vh auto;
         }
 
         .home h1 {
-            font-size: 30px;
+            font-size: 32px;
         }
 
-        .header h2 {
-            font-size: 17px;
+        .big-logo {
+            font-size: 75px;
         }
+
+        .bubble {
+            max-width: 80%;
+        }
+
+        .nav button {
+            padding: 9px 11px;
+        }
+
     }
+
 </style>
 ```
 
@@ -373,265 +566,422 @@
 
 <body>
 
+```
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+
 <div class="app">
 
-```
-<div class="header">
 
-    <div class="brand">
+    <!-- HEADER -->
 
-        <div class="ai-logo">
+    <div class="header">
+
+        <div class="brand">
+
+            <div class="logo">
+                🤖
+            </div>
+
+            <div>
+
+                <h2>NAILA AI</h2>
+
+                <div class="status">
+                    <span class="online"></span>
+                    Online • Your personal assistant
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="top-button" onclick="toggleTheme()">
+            🌙
+        </button>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="nav">
+
+        <button class="active" onclick="showPage('home',this)">
+            🏠 Home
+        </button>
+
+        <button onclick="showPage('chatPage',this)">
+            💬 Chat
+        </button>
+
+        <button onclick="showPage('imagePage',this)">
+            🖼️ Images
+        </button>
+
+        <button onclick="showPage('gamePage',this)">
+            🎮 Game
+        </button>
+
+        <button onclick="showPage('musicPage',this)">
+            🎵 Music
+        </button>
+
+        <button onclick="showPage('settingsPage',this)">
+            ⚙️ Settings
+        </button>
+
+        <button onclick="showPage('profilePage',this)">
+            👤 Profile
+        </button>
+
+        <button onclick="showPage('aboutPage',this)">
+            ℹ️ About
+        </button>
+
+    </div>
+
+
+    <!-- HOME -->
+
+    <div id="home" class="page active home">
+
+        <div class="big-logo">
             🤖
         </div>
 
-        <div>
-            <h2>NAILA AI</h2>
+        <h1>
+            Welcome to
+            <span class="gradient-text">
+                NAILA AI
+            </span>
+        </h1>
 
-            <div class="status">
-                <span class="online"></span>
-                Online
+        <p>
+            A little AI-style web assistant created with
+            HTML, CSS and JavaScript. Explore the features,
+            customize it and make it your own! ✨
+        </p>
+
+        <button class="start" onclick="openChat()">
+            Start Chatting 💬
+        </button>
+
+    </div>
+
+
+    <!-- CHAT -->
+
+    <div id="chatPage" class="page">
+
+        <div id="chat"></div>
+
+        <div id="typing">
+            🤖 Naila AI is thinking...
+        </div>
+
+        <div class="input-area">
+
+            <button
+                class="input-button"
+                onclick="startListening()"
+                title="Voice input">
+                🎤
+            </button>
+
+            <input
+                id="message"
+                type="text"
+                placeholder="Message Naila AI..."
+            >
+
+            <button
+                class="input-button send"
+                onclick="answer()">
+                ➤
+            </button>
+
+        </div>
+
+        <button class="clear" onclick="clearChat()">
+            🗑️ Clear conversation
+        </button>
+
+    </div>
+
+
+    <!-- IMAGE GENERATOR -->
+
+    <div id="imagePage" class="page">
+
+        <div class="image-box">
+
+            <h2>🖼️ NAILA Image Studio</h2>
+
+            <p>
+                Describe an image you'd like to create.
+            </p>
+
+            <input
+                id="imagePrompt"
+                placeholder="A futuristic city at night..."
+            >
+
+            <div class="image-preview" id="imagePreview">
+                🎨
             </div>
-        </div>
 
-    </div>
+            <button
+                class="start"
+                onclick="generateImageDemo()">
+                ✨ Generate
+            </button>
 
-    <div class="header-buttons">
-        <button onclick="toggleTheme()">🌙</button>
-    </div>
-
-</div>
-
-
-<div class="nav">
-
-    <button class="active" onclick="showPage('home', this)">
-        🏠 Home
-    </button>
-
-    <button onclick="showPage('chatPage', this)">
-        💬 Chat
-    </button>
-
-    <button onclick="showPage('settings', this)">
-        ⚙️ Settings
-    </button>
-
-    <button onclick="showPage('music', this)">
-        🎵 Music
-    </button>
-
-    <button onclick="showPage('about', this)">
-        ℹ️ About
-    </button>
-
-    <button onclick="showPage('login', this)">
-        🔐 Login
-    </button>
-
-</div>
-
-
-<div id="home" class="page active home">
-
-    <div class="home-icon">
-        🤖
-    </div>
-
-    <h1>Welcome to NAILA AI</h1>
-
-    <p>
-        Your personal little chatbot.
-        Ask questions, experiment, and have fun!
-    </p>
-
-    <button
-        class="start-button"
-        onclick="openChat()"
-    >
-        Start Chatting 💬
-    </button>
-
-</div>
-
-
-<div id="chatPage" class="page">
-
-    <div id="chat"></div>
-
-    <div id="typing">
-        🤖 Naila AI is typing...
-    </div>
-
-    <div class="input-area">
-
-        <input
-            type="text"
-            id="message"
-            placeholder="Message Naila AI..."
-        >
-
-        <button
-            class="send-button"
-            onclick="answer()"
-        >
-            ➤
-        </button>
-
-    </div>
-
-    <button
-        class="clear-button"
-        onclick="clearChat()"
-    >
-        🗑 Clear conversation
-    </button>
-
-</div>
-
-
-<div id="settings" class="page">
-
-    <div class="settings">
-
-        <h2>⚙️ Settings</h2>
-
-        <div class="setting-box">
-
-            <b>🤖 AI Personality</b>
-
-            <br>
-
-            <select id="personality">
-
-                <option value="friendly">
-                    😊 Friendly
-                </option>
-
-                <option value="funny">
-                    😂 Funny
-                </option>
-
-                <option value="serious">
-                    🧠 Serious
-                </option>
-
-                <option value="sassy">
-                    😏 Sassy
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="setting-box">
-
-            <b>👤 Your Avatar</b>
-
-            <br>
-
-            <select id="avatar">
-
-                <option>👤</option>
-                <option>😎</option>
-                <option>🧑‍💻</option>
-                <option>🦊</option>
-                <option>🐱</option>
-                <option>🐼</option>
-
-            </select>
+            <p id="imageText"></p>
 
         </div>
 
     </div>
 
-</div>
 
+    <!-- GAME -->
 
-<div id="music" class="page music">
+    <div id="gamePage" class="page">
 
-    <h2>🎵 Music</h2>
+        <div class="game">
 
-    <p>
-        Add your own music file later!
-    </p>
+            <h2>🎮 Guess the Number</h2>
 
-    <button onclick="musicDemo()">
-        🎵 Play / Stop
-    </button>
+            <p>
+                I'm thinking of a number from 1 to 10.
+            </p>
 
-</div>
+            <button
+                class="game-button"
+                onclick="playGame()">
+                🎲
+            </button>
 
+            <div id="gameResult">
+                Make your guess!
+            </div>
 
-<div id="about" class="page about">
+            <input
+                id="guess"
+                type="number"
+                min="1"
+                max="10"
+                placeholder="Your number"
+            >
 
-    <h2>ℹ️ About NAILA AI</h2>
-
-    <p>
-        NAILA AI is a personal web project made with
-        HTML, CSS and JavaScript.
-    </p>
-
-    <p>
-        It currently uses programmed responses rather
-        than a real online AI model.
-    </p>
-
-    <p>
-        Built for learning, experimenting and having fun! 💜
-    </p>
-
-</div>
-
-
-<div id="login" class="page login">
-
-    <div class="login-box">
-
-        <h2>🔐 Welcome Back</h2>
-
-        <input
-            type="text"
-            id="username"
-            placeholder="Username"
-        >
-
-        <input
-            type="password"
-            id="password"
-            placeholder="Password"
-        >
-
-        <button onclick="login()">
-            Login
-        </button>
-
-        <p id="loginMessage"></p>
+        </div>
 
     </div>
+
+
+    <!-- MUSIC -->
+
+    <div id="musicPage" class="page">
+
+        <div class="music">
+
+            <div class="music-icon">
+                🎵
+            </div>
+
+            <h2>NAILA Music</h2>
+
+            <p>
+                Find your favorite popular songs on YouTube.
+            </p>
+
+            <a
+                href="https://www.youtube.com/results?search_query=popular+songs"
+                target="_blank">
+                ▶️ Open Popular Music
+            </a>
+
+            <p>
+                You can replace the link with your favorite
+                song whenever you want.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SETTINGS -->
+
+    <div id="settingsPage" class="page">
+
+        <div class="content">
+
+            <h2>⚙️ Settings</h2>
+
+            <div class="card">
+
+                <h3>🤖 Personality</h3>
+
+                <select id="personality">
+
+                    <option value="friendly">
+                        😊 Friendly
+                    </option>
+
+                    <option value="funny">
+                        😂 Funny
+                    </option>
+
+                    <option value="serious">
+                        🧠 Serious
+                    </option>
+
+                    <option value="sassy">
+                        😏 Sassy
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>👤 Avatar</h3>
+
+                <select id="avatar">
+
+                    <option>👤</option>
+                    <option>😎</option>
+                    <option>🧑‍💻</option>
+                    <option>🦊</option>
+                    <option>🐱</option>
+                    <option>🐼</option>
+                    <option>🦄</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🎨 Theme</h3>
+
+                <button
+                    class="normal-button"
+                    onclick="toggleTheme()">
+                    Change Theme
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div id="profilePage" class="page">
+
+        <div class="profile">
+
+            <div
+                id="profileAvatar"
+                class="profile-avatar">
+                👤
+            </div>
+
+            <h2 id="profileName">
+                Naila User
+            </h2>
+
+            <p>
+                Welcome to your NAILA AI profile! 💜
+            </p>
+
+            <button
+                class="normal-button"
+                onclick="changeName()">
+                ✏️ Change Name
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ABOUT -->
+
+    <div id="aboutPage" class="page">
+
+        <div class="content">
+
+            <h2>ℹ️ About NAILA AI</h2>
+
+            <div class="card">
+
+                <h3>🤖 What is NAILA AI?</h3>
+
+                <p>
+                    NAILA AI is a personal web project
+                    made using HTML, CSS and JavaScript.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>✨ Features</h3>
+
+                <p>
+                    Chat • Voice • Themes • Profile •
+                    Games • Music • Image Studio •
+                    Local Memory
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>💻 Version</h3>
+
+                <p>
+                    NAILA AI 2.0
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 
 </div>
 ```
 
-</div>
-
 <script>
+
+
+/* PAGE SYSTEM */
 
 function showPage(pageId, button) {
 
-    let pages = document.querySelectorAll(".page");
+    document.querySelectorAll(".page")
+        .forEach(function(page) {
+            page.classList.remove("active");
+        });
 
-    pages.forEach(function(page) {
-        page.classList.remove("active");
-    });
+    document.getElementById(pageId)
+        .classList.add("active");
 
-    document.getElementById(pageId).classList.add("active");
-
-    let buttons = document.querySelectorAll(".nav button");
-
-    buttons.forEach(function(btn) {
-        btn.classList.remove("active");
-    });
+    document.querySelectorAll(".nav button")
+        .forEach(function(btn) {
+            btn.classList.remove("active");
+        });
 
     button.classList.add("active");
 }
@@ -639,25 +989,42 @@ function showPage(pageId, button) {
 
 function openChat() {
 
-    let buttons = document.querySelectorAll(".nav button");
+    let buttons =
+        document.querySelectorAll(".nav button");
 
     showPage("chatPage", buttons[1]);
 
 }
 
 
+/* THEME */
+
 function toggleTheme() {
 
     document.body.classList.toggle("light");
 
+    localStorage.setItem(
+        "nailaTheme",
+        document.body.classList.contains("light")
+            ? "light"
+            : "dark"
+    );
+
 }
 
 
+/* LOAD THEME */
+
+if (localStorage.getItem("nailaTheme") === "light") {
+    document.body.classList.add("light");
+}
+
+
+/* TIME */
+
 function getTime() {
 
-    let now = new Date();
-
-    return now.toLocaleTimeString([], {
+    return new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit"
     });
@@ -665,31 +1032,32 @@ function getTime() {
 }
 
 
+/* CHAT */
+
 function answer() {
 
-    let input = document.getElementById("message");
+    let input =
+        document.getElementById("message");
 
-    let message = input.value.trim();
+    let message =
+        input.value.trim();
 
-    if (message === "") {
-        return;
-    }
+    if (!message) return;
 
-    let chat = document.getElementById("chat");
+    let chat =
+        document.getElementById("chat");
 
-    let typing = document.getElementById("typing");
-
-    let userAvatar =
+    let avatar =
         document.getElementById("avatar").value;
 
 
     chat.innerHTML += `
 
-        <div class="message-container user-container">
+        <div class="message-row user-row">
 
-            <div class="message user-message">
+            <div class="bubble user-bubble">
 
-                ${message}
+                ${escapeHTML(message)}
 
                 <div class="time">
                     ${getTime()}
@@ -698,7 +1066,7 @@ function answer() {
             </div>
 
             <div class="avatar user-avatar">
-                ${userAvatar}
+                ${avatar}
             </div>
 
         </div>
@@ -706,195 +1074,34 @@ function answer() {
     `;
 
 
+    saveChat();
+
     input.value = "";
 
-    typing.style.display = "block";
+    document.getElementById("typing")
+        .style.display = "block";
 
     chat.scrollTop = chat.scrollHeight;
 
 
     setTimeout(function() {
 
-        let text = message.toLowerCase();
+        let response =
+            getResponse(message);
 
-        let response = "";
-
-        let personality =
-            document.getElementById("personality").value;
-
-
-        if (
-            text.includes("hello") ||
-            text.includes("hi") ||
-            text.includes("hey")
-        ) {
-
-            if (personality === "funny") {
-                response = "HEYYYY 😂🤖 What's happening?";
-            }
-
-            else if (personality === "sassy") {
-                response = "Well hello there 😏 Finally!";
-            }
-
-            else if (personality === "serious") {
-                response = "Hello. How may I assist you?";
-            }
-
-            else {
-                response = "Hey! 👋✨ How are you?";
-            }
-
-        }
-
-        else if (text.includes("how are you")) {
-
-            response =
-                "I'm doing amazing! 🤖💜 Thanks for asking!";
-
-        }
-
-        else if (
-            text.includes("your name") ||
-            text.includes("who are you")
-        ) {
-
-            response =
-                "I'm NAILA AI! 🤖✨ Your little website assistant!";
-
-        }
-
-        else if (
-            text.includes("who made you") ||
-            text.includes("who created you")
-        ) {
-
-            response =
-                "YOU did! 😎 You're the creator of NAILA AI!";
-
-        }
-
-        else if (text.includes("joke")) {
-
-            response =
-                "Why did the computer go to the doctor? Because it had a virus! 😂💻";
-
-        }
-
-        else if (
-            text.includes("thank you") ||
-            text.includes("thanks")
-        ) {
-
-            response =
-                "You're very welcome! 💜✨";
-
-        }
-
-        else if (
-            text.includes("coding") ||
-            text.includes("programming") ||
-            text.includes("code")
-        ) {
-
-            response =
-                "Coding is awesome! 💻🔥 Keep experimenting!";
-
-        }
-
-        else if (text.includes("html")) {
-
-            response =
-                "HTML builds the structure of a webpage! 🏗️💻";
-
-        }
-
-        else if (text.includes("css")) {
-
-            response =
-                "CSS makes webpages beautiful! 🎨✨";
-
-        }
-
-        else if (
-            text.includes("javascript") ||
-            text.includes("java script")
-        ) {
-
-            response =
-                "JavaScript makes webpages interactive! ⚡💻";
-
-        }
-
-        else if (text.includes("good morning")) {
-
-            response =
-                "Good morning! ☀️ I hope you have an amazing day!";
-
-        }
-
-        else if (text.includes("good night")) {
-
-            response =
-                "Good night! 🌙💜 Sleep well!";
-
-        }
-
-        else if (
-            text.includes("bye") ||
-            text.includes("goodbye")
-        ) {
-
-            response =
-                "Bye bye! 👋💜 Come back soon!";
-
-        }
-
-        else {
-
-            if (personality === "funny") {
-
-                response =
-                    "Hmmmm... my robot brain is confused 😂🤖";
-
-            }
-
-            else if (personality === "sassy") {
-
-                response =
-                    "I have absolutely no idea what you just said 😭";
-
-            }
-
-            else if (personality === "serious") {
-
-                response =
-                    "I don't have enough information to answer that.";
-
-            }
-
-            else {
-
-                response =
-                    "Hmm... 🤔 I don't know that one yet!";
-
-            }
-
-        }
-
-
-        typing.style.display = "none";
+        document.getElementById("typing")
+            .style.display = "none";
 
 
         chat.innerHTML += `
 
-            <div class="message-container ai-container">
+            <div class="message-row ai-row">
 
                 <div class="avatar ai-avatar">
                     🤖
                 </div>
 
-                <div class="message ai-message">
+                <div class="bubble ai-bubble">
 
                     ${response}
 
@@ -902,12 +1109,11 @@ function answer() {
                         ${getTime()}
                     </div>
 
-                    <span
-                        class="copy"
-                        onclick="copyText(this)"
-                    >
-                        📋 Copy
-                    </span>
+                    <div
+                        class="message-tools"
+                        onclick="speak('${escapeSpeech(response)}')">
+                        🔊 Read aloud
+                    </div>
 
                 </div>
 
@@ -916,13 +1122,121 @@ function answer() {
         `;
 
 
-        chat.scrollTop = chat.scrollHeight;
+        saveChat();
 
+        chat.scrollTop =
+            chat.scrollHeight;
 
-    }, 800);
+    }, 700);
 
 }
 
+
+/* RESPONSES */
+
+function getResponse(message) {
+
+    let text =
+        message.toLowerCase();
+
+    let personality =
+        document.getElementById("personality").value;
+
+
+    if (
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey")
+    ) {
+
+        if (personality === "funny")
+            return "HEYYYY 😂🤖 What's happening?!";
+
+        if (personality === "sassy")
+            return "Oh, hello 😏 Took you long enough!";
+
+        if (personality === "serious")
+            return "Hello. How may I assist you?";
+
+        return "Hey! 👋✨ It's great to see you!";
+
+    }
+
+
+    if (text.includes("how are you"))
+        return "I'm doing great! 🤖💜 Thanks for asking!";
+
+
+    if (
+        text.includes("your name") ||
+        text.includes("who are you")
+    )
+        return "I'm NAILA AI! 🤖✨ Your personal web assistant.";
+
+
+    if (
+        text.includes("who made you") ||
+        text.includes("who created you")
+    )
+        return "You did! 😎 You're the creator of NAILA AI!";
+
+
+    if (text.includes("joke"))
+        return "Why did the computer go to school? To improve its byte-sized knowledge! 😂💻";
+
+
+    if (
+        text.includes("html") ||
+        text.includes("css") ||
+        text.includes("javascript")
+    )
+        return "Web development is awesome! 💻✨ HTML creates the structure, CSS creates the design, and JavaScript adds interaction.";
+
+
+    if (
+        text.includes("thank") ||
+        text.includes("thanks")
+    )
+        return "You're welcome! 💜✨";
+
+
+    if (
+        text.includes("good morning")
+    )
+        return "Good morning! ☀️ Have an amazing day!";
+
+
+    if (
+        text.includes("good night")
+    )
+        return "Good night! 🌙💜";
+
+
+    if (
+        text.includes("bye") ||
+        text.includes("goodbye")
+    )
+        return "Bye! 👋 Come back soon!";
+
+
+    if (personality === "funny")
+        return "Hmmmm... 🤔 My tiny robot brain needs more information 😂";
+
+
+    if (personality === "sassy")
+        return "I have absolutely no idea what you mean 😭 Try again!";
+
+
+    if (personality === "serious")
+        return "I don't have enough information to provide a reliable answer.";
+
+
+    return "Interesting! 🤔 I don't know that one yet, but I'm still learning! 💜";
+
+}
+
+
+/* ENTER TO SEND */
 
 document
     .getElementById("message")
@@ -935,101 +1249,260 @@ document
     });
 
 
+/* ESCAPE HTML */
+
+function escapeHTML(text) {
+
+    return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* ESCAPE SPEECH */
+
+function escapeSpeech(text) {
+
+    return text
+        .replaceAll("\\", "")
+        .replaceAll("'", "")
+        .replaceAll('"', "");
+
+}
+
+
+/* CLEAR CHAT */
+
 function clearChat() {
 
-    document.getElementById("chat").innerHTML = "";
+    document.getElementById("chat")
+        .innerHTML = "";
+
+    localStorage.removeItem("nailaChat");
 
 }
 
 
-function copyText(element) {
+/* SAVE CHAT */
 
-    let message =
-        element.parentElement.innerText;
+function saveChat() {
 
-    navigator.clipboard.writeText(message);
-
-    element.innerText = "✓ Copied!";
-
-    setTimeout(function() {
-        element.innerText = "📋 Copy";
-    }, 1500);
+    localStorage.setItem(
+        "nailaChat",
+        document.getElementById("chat").innerHTML
+    );
 
 }
 
 
-function login() {
+/* LOAD CHAT */
 
-    let username =
-        document.getElementById("username").value;
+let savedChat =
+    localStorage.getItem("nailaChat");
 
-    let password =
-        document.getElementById("password").value;
+if (savedChat) {
 
-    let message =
-        document.getElementById("loginMessage");
+    document.getElementById("chat")
+        .innerHTML = savedChat;
+
+}
 
 
-    if (username === "" || password === "") {
+/* TEXT TO SPEECH */
 
-        message.innerText =
-            "Please enter both fields.";
+function speak(text) {
+
+    if ("speechSynthesis" in window) {
+
+        let speech =
+            new SpeechSynthesisUtterance(text);
+
+        speech.rate = 1;
+
+        speech.pitch = 1;
+
+        speechSynthesis.speak(speech);
+
+    }
+
+}
+
+
+/* MICROPHONE */
+
+function startListening() {
+
+    let SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        alert(
+            "Voice input is not supported by this browser."
+        );
 
         return;
 
     }
 
 
-    localStorage.setItem(
-        "nailaUsername",
-        username
-    );
+    let recognition =
+        new SpeechRecognition();
+
+    recognition.lang = "en-US";
+
+    recognition.start();
 
 
-    message.innerText =
-        "Welcome, " + username + "! 🎉";
+    recognition.onresult =
+        function(event) {
+
+            document.getElementById("message")
+                .value =
+                event.results[0][0].transcript;
+
+        };
 
 }
 
 
-let audioContext = null;
-let oscillator = null;
+/* IMAGE STUDIO DEMO */
+
+function generateImageDemo() {
+
+    let prompt =
+        document.getElementById("imagePrompt").value;
+
+    let preview =
+        document.getElementById("imagePreview");
+
+    let text =
+        document.getElementById("imageText");
 
 
-function musicDemo() {
+    if (!prompt) {
 
-    if (!audioContext) {
+        text.innerText =
+            "Write an image description first! ✨";
 
-        audioContext =
-            new (window.AudioContext ||
-            window.webkitAudioContext)();
+        return;
 
-        oscillator =
-            audioContext.createOscillator();
+    }
 
-        oscillator.frequency.value = 440;
 
-        oscillator.connect(
-            audioContext.destination
-        );
+    preview.innerHTML = "✨";
 
-        oscillator.start();
+    preview.style.background =
+        "linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4)";
+
+
+    text.innerText =
+        "✨ Imagine this: " + prompt;
+
+}
+
+
+/* MINI GAME */
+
+function playGame() {
+
+    let guess =
+        Number(document.getElementById("guess").value);
+
+    let result =
+        document.getElementById("gameResult");
+
+    if (
+        guess < 1 ||
+        guess > 10 ||
+        !guess
+    ) {
+
+        result.innerText =
+            "Choose a number from 1 to 10! 🎲";
+
+        return;
+
+    }
+
+
+    let number =
+        Math.floor(Math.random() * 10) + 1;
+
+
+    if (guess === number) {
+
+        result.innerText =
+            "🎉 YOU GOT IT! The number was " + number + "!";
 
     }
 
     else {
 
-        oscillator.stop();
-
-        oscillator = null;
-
-        audioContext.close();
-
-        audioContext = null;
+        result.innerText =
+            "😅 Not this time! I picked " +
+            number + ".";
 
     }
 
 }
+
+
+/* PROFILE NAME */
+
+function changeName() {
+
+    let name =
+        prompt("What should NAILA AI call you?");
+
+
+    if (name) {
+
+        localStorage.setItem(
+            "nailaName",
+            name
+        );
+
+        document.getElementById("profileName")
+            .innerText =
+            name;
+
+    }
+
+}
+
+
+/* LOAD PROFILE */
+
+let savedName =
+    localStorage.getItem("nailaName");
+
+if (savedName) {
+
+    document.getElementById("profileName")
+        .innerText =
+        savedName;
+
+}
+
+
+/* UPDATE AVATAR */
+
+document
+    .getElementById("avatar")
+    .addEventListener("change", function() {
+
+        document.getElementById("profileAvatar")
+            .innerText =
+            this.value;
+
+    });
 
 </script>
 
